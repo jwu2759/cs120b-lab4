@@ -12,7 +12,7 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {Init, Pressed, Wait1, Wait2} state;
+enum States {Start,Init, Pressed, Wait1, Wait2} state;
 void light(){
 	unsigned char tmp = PINA & 0x01;
 	switch(state){
@@ -29,8 +29,8 @@ void light(){
 			else state = Wait1;
 			break;
 		case Wait2:
-			if(tmp == 0x01) state = Init;
-			else state = Wait2;
+			if(tmp == 0x01) state = Wait2;
+			else state = Init;
 			break;
 		default:
 			state = Init;
@@ -47,6 +47,7 @@ void light(){
 			PORTB = 0x02;
 			break;
 		case Wait2:
+			PORTB = 0x01;
 			break;
 		default:
 			break;

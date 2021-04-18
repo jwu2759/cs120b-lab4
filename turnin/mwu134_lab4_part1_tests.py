@@ -21,12 +21,13 @@ tests = [
         {'inputs': [('PINA', 0x01)], 'iterations': 2}],
     'expected': [('PORTB',0x01)],
     },
-{'description': 'PINA: 0x01, 0x01, 0x01 => PORTB: 0x02, state: Pressed',
-    'steps': [{'inputs': [('PINA', 0x01)], 'iterations': 2},
+{'description': 'PINA: 0x00, 0x00, 0x00 => PORTB: 0x02, state: Pressed',
+    'steps': [{'inputs': [('PINA', 0x00)], 'iterations': 2},
         {'inputs': [('PINA', 0x01)], 'iterations': 2},
-        {'inputs': [('PINA', 0x01)], 'iterations': 2}],
+        {'inputs': [('PINA', 0x00)], 'iterations': 2}],
     'expected': [('PORTB',0x02)],
     },
+
 
     ]
 

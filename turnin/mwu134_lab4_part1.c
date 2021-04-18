@@ -47,7 +47,6 @@ void light(){
 			PORTB = 0x02;
 			break;
 		case Wait2:
-			PORTB = 0x01;
 			break;
 		default:
 			break;

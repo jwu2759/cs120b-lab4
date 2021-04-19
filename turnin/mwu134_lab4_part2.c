@@ -12,7 +12,7 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {Start, Init, Inc, Dec, Wait, Reset} state;
+enum States {Start, Init, Inc, Dec, Wait, Reset, Wait1, Wait2} state;
 void counter(){
 	unsigned char A0 = PINA & 0x01;
 	unsigned char A1 = PINA & 0x02;
@@ -27,19 +27,32 @@ void counter(){
 			else state = Init;
 			break;
 		case Inc:
-			state = Wait;
+			state = Wait1;
 			break;
 		case Dec:
-			state = Wait;
+			state = Wait2;
 			break;
 		case Wait:
 			if(A0 && A1) state = Reset;
 			else if(!A1 && !A0) state = Init;
+			else if(A0 && !A1) state = Inc;
+                        else if(!A0 && A1) state = Dec;
 			else state = Wait;
 			break;
 		case Reset:
 			if(A0 && A1) state = Reset;
 			else state = Wait;
+			break;
+		case Wait1:
+			if(A0 && A1) state = Reset;
+			else if(A0) state = Wait1;
+			else state = Wait;
+			break;
+		case Wait2:
+			if(A0 && A1) state = Reset;
+			else if(A1) state = Wait2;
+			else state = Wait;
+			break;
 		default:
 			state = Init;
 			break;

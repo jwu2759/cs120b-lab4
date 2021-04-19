@@ -12,18 +12,21 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {Lock, Unlock, Unlock1 } state;
+enum States {Start, Lock, Unlock, Unlock1, Release} state;
 void doorLock(){
 	unsigned char A0 = PINA & 0x01;
 	unsigned char A1 = PINA & 0x02;
 	unsigned char A2 = PINA & 0x04;
 	unsigned char A7 = PINA & 0x80;
 	switch(state){
+		case Start:
+			state = Lock;
+			break;
 		case Lock:
 			if(A7) state = Lock;
 			else{
 				if(!A0 && !A1 && A2)
-					state = Unlock;
+					state = Release;
 				else 
 					state = Lock;
 			}
@@ -31,10 +34,10 @@ void doorLock(){
 		case Unlock:
 			if(A7) state = Lock;
                         else{
-                                if(!A0 && A1 && !A2)
-                                        state = Unlock1;
-				else if(!A0 && !A1 && !A2)
-					state = Unlock;
+                                if(!A0 && !A1 && !A2)
+                                        state = Unlock;
+				else if(!A0 && A1 && !A2)
+					state = Unlock1;
                                 else
                                         state = Lock;
                         }
@@ -43,11 +46,18 @@ void doorLock(){
 			if(A7) state = Lock;
 			else state = Unlock1;
 			break;
+		case Release:
+			if(!A0 && !A1 && !A2) state = Unlock;
+			else state = Release;
+			break;
 		default:
 			state = Lock;
 			break;
 	}
 	switch(state){
+		case Start:
+			PORTB = 0x00;
+			break;
 		case Lock:
 			PORTB = 0x00;
 			break;
@@ -55,7 +65,9 @@ void doorLock(){
 			break;
 		case Unlock1:
 			PORTB = 0x01;
-			break;	
+			break;
+		case Release:
+			break;
 		default:
 			break;
 	}

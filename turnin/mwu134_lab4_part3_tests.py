@@ -19,7 +19,7 @@ tests = [
     'steps': [{'inputs': [('PINA', 0x04)], 'iterations': 3},
         {'inputs': [('PINA', 0x02)], 'iterations': 3},
         {'inputs': [('PINA', 0x00)], 'iterations': 3}],
-   'expected': [('PORTB',0x01)],
+   'expected': [('PORTB',0x00)],
     },
 {'description': 'PINA: 0x00, 0x01, 0x02 => PORTC: 0x07, state: Pressed',
     'steps': [{'inputs': [('PINA', 0x80)], 'iterations': 2},
@@ -29,13 +29,13 @@ tests = [
     },
 
 {'description': 'PINA: 0x00, 0x00, 0x00 => PORTC: 0x0, state: Pressed',
-    'steps': [{'inputs': [('PINA', 0x03)], 'iterations': 2},
-        {'inputs': [('PINA', 0x01)], 'iterations': 4},
-        {'inputs': [('PINA', 0x01)], 'iterations': 4},
-	{'inputs': [('PINA', 0x01)], 'iterations': 4},
+    'steps': [{'inputs': [('PINA', 0x04)], 'iterations': 2},
+        {'inputs': [('PINA', 0x00)], 'iterations': 4},
+        {'inputs': [('PINA', 0x02)], 'iterations': 4},
+	{'inputs': [('PINA', 0x00)], 'iterations': 4},
 	{'inputs': [('PINA', 0x02)], 'iterations': 4},
 	{'inputs': [('PINA', 0x02)], 'iterations': 4}],
-    'expected': [('PORTB',0x00)],
+    'expected': [('PORTB',0x01)],
     },
 
 

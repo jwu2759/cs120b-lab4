@@ -45,12 +45,12 @@ void counter(){
 			break;
 		case Wait1:
 			if(A0 && A1) state = Reset;
-			else if(A0) state = Wait1;
+			else if(A0 && !A1) state = Wait1;
 			else state = Wait;
 			break;
 		case Wait2:
 			if(A0 && A1) state = Reset;
-			else if(A1) state = Wait2;
+			else if(!A0 && A1) state = Wait2;
 			else state = Wait;
 			break;
 		default:
